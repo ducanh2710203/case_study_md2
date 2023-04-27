@@ -1,12 +1,12 @@
 export class Staff {
-    private _name : string
-    private _entryTime: string
-    private _timeOut : string
+    private _name: string
+    private _account: string
+    private _password: string
 
-    constructor(name: string, entryTime: string, timeOut: string) {
+    constructor(name: string, _account: string, _password: string) {
         this._name = name;
-        this._entryTime = entryTime;
-        this._timeOut = timeOut;
+        this._account = _account;
+        this._password = _password;
     }
 
     get name(): string {
@@ -17,19 +17,19 @@ export class Staff {
         this._name = value;
     }
 
-    get entryTime(): string {
-        return this._entryTime;
+    get account(): string {
+        return this._account;
     }
 
-    set entryTime(value: string) {
-        this._entryTime = value;
+    set account(value: string) {
+        this._account = value;
     }
 
-    get timeOut(): string {
-        return this._timeOut;
+    get password(): string {
+        return this._password;
     }
 
-    set timeOut(value: string) {
-        this._timeOut = value;
+    set password(value: string) {
+        this._password = value;
     }
 }
