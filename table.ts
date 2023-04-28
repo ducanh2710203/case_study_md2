@@ -16,7 +16,6 @@ export class Table {
     }
 
     totalMoneyTable(nu: number) {
-        // console.log('GET TIME------ ',this.getTime())
         if (this.entryTime && this.timeOut && this.getTime() !== undefined) {
             return (this.timeOut.getMinutes() - this.entryTime.getMinutes()) * 4500 + nu
         }

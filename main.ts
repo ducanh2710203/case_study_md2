@@ -18,40 +18,56 @@ let repeat = true
 // ============================================function============================================
 function oderServe(oder: number) {
     let table = manageTable.listTable[numTable - 1];
-    let moneyServe: number | undefined = manageTable.TotalMoneyTable(numTable, table.serve);
-    if (moneyServe !== undefined) {
-        let messageTable = "===================table" + numTable + " is not turned on===================";
-        switch (oder) {
-            case 1:
-                table.serve = 10
-                if (table.entryTime !== null) {
-                    moneyTable += table.serve
-                    break
-                } else {
-                    console.log(messageTable)
-                    break
+
+    let messageTable = "===================table" + numTable + "365ER1Aon===================";
+    switch (oder) {
+        case 1:
+            console.log("nhap 1 : goi do\nnhap 2 : tra lai")
+            let option = readlineSync.question("nhap")
+            switch (option) {
+                case 1: {
+                    if (table.entryTime !== null) {
+                        table.serve = 10
+                        moneyTable += table.serve
+                        break
+                    } else {
+                        console.log(messageTable)
+                        break
+                    }
                 }
-            case 2:
-                table.serve = 11
-                if (table.entryTime !== null) {
-                    moneyTable += table.serve
-                    break
-                } else {
-                    console.log(messageTable)
-                    break
+                case 2: {
+                    if (table.entryTime !== null) {
+                        table.serve = 10
+                        moneyTable -= table.serve
+                        break
+                    } else {
+                        console.log(messageTable)
+                        break
+                    }
                 }
-            case 3:
-                table.serve = 30
-                if (table.entryTime !== null) {
-                    moneyTable += table.serve
+
+                case 2:
+                    table.serve = 11
+                    if (table.entryTime !== null) {
+                        moneyTable += table.serve
+                        break
+                    } else {
+                        console.log(messageTable)
+                        break
+                    }
+                case 3:
+                    table.serve = 30
+                    if (table.entryTime !== null) {
+                        moneyTable += table.serve
+                        break
+                    } else {
+                        console.log(messageTable)
+                        break
+                    }
+                case 0:
                     break
-                } else {
-                    console.log(messageTable)
-                    break
-                }
-            case 0:
-                break
-        }
+            }
+
     }
 }
 
@@ -132,14 +148,16 @@ while (repeat) {
             console.table(manageAcc)
             let account: string
             let password: string
-            let acc = manageAcc[i].account;
-            let pass = manageAcc[i].password;
+
             do {
                 account = readlineSync.question("account: ")
                 password = readlineSync.question("password: ")
-                for (let j = 0; j < manageAcc.length; j++) {
-                    if (account == acc || password == pass) {
+                for (i = 0; i < manageAcc.length; i++) {
+
+                    if (account == manageAcc[i].account || password == manageAcc[i].password) {
+
                         checkLogin = true
+
                     }
                 }
                 if (!checkLogin) {
