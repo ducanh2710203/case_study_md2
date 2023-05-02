@@ -1,9 +1,10 @@
 import {ManageTable} from "./manage/manageTable";
 import {Staff} from "./staff";
-
+import {Table} from "./table";
+// ==============================variable initialization and declaration==============================
 let readlineSync = require('readline-sync')
+// let table =
 let init: number
-let moneyTable: number = 0
 let manageTable = new ManageTable()
 let numberOfTable = 5
 let printfTable = manageTable.creatTable(numberOfTable)
@@ -14,106 +15,7 @@ let i = 0
 let checkLogin = false
 manageAcc.push(admin)
 let repeat = true
-
-// ============================================function============================================
-function oderServe(oder: number) {
-    let table = manageTable.listTable[numTable - 1];
-
-    let messageTable = "===================table" + numTable + "365ER1Aon===================";
-    switch (oder) {
-        case 1:
-            console.log("nhap 1 : goi do\nnhap 2 : tra lai")
-            let option = readlineSync.question("nhap")
-            switch (option) {
-                case 1: {
-                    if (table.entryTime !== null) {
-                        table.serve = 10
-                        moneyTable += table.serve
-                        break
-                    } else {
-                        console.log(messageTable)
-                        break
-                    }
-                }
-                case 2: {
-                    if (table.entryTime !== null) {
-                        table.serve = 10
-                        moneyTable -= table.serve
-                        break
-                    } else {
-                        console.log(messageTable)
-                        break
-                    }
-                }
-
-                case 2:
-                    table.serve = 11
-                    if (table.entryTime !== null) {
-                        moneyTable += table.serve
-                        break
-                    } else {
-                        console.log(messageTable)
-                        break
-                    }
-                case 3:
-                    table.serve = 30
-                    if (table.entryTime !== null) {
-                        moneyTable += table.serve
-                        break
-                    } else {
-                        console.log(messageTable)
-                        break
-                    }
-                case 0:
-                    break
-            }
-
-    }
-}
-
-function workWithTheTable() {
-    numTable = readlineSync.question("table: ")
-    if (numTable <= numberOfTable && numTable > 0) {
-        console.log("======work with the table======")
-        console.log("nhap 1 : TurnOnTheTable\nnhap 2 : TurnOffTheTable\nnhap 3 : oder\nnhap 0 : out")
-        let inp = +readlineSync.question("nhap: ")
-        let table = manageTable.listTable[numTable - 1];
-        switch (inp) {
-            case 1:
-                manageTable.TurnOnTheTable(numTable)
-                break
-            case 2: {
-                manageTable.TurnOffTheTable(numTable)
-                console.log(`
-                            ============totalMoneyTable============`)
-                console.log(`
-            ==================================Bill================================
-            = +table: ${numTable}                                                     
-            =                                                                    
-            = +time : ${table.getTime()} 
-            =                                                                    
-            =                                                                    
-            = +pay = ${moneyTable} + ${manageTable.TotalMoneyTable(numTable, 0)} = ${moneyTable += manageTable.TotalMoneyTable(numTable, 0)}                                
-            ======================================================================
-            `)
-                break
-            }
-            case 3: {
-                console.log("nhap 1 : food\nnhap 2 : water\nnhap 3 : poolCue\nnhap 0 : out")
-                let oder: number = +readlineSync.question("nhap: ")
-                if (table.status !== null) {
-                    oderServe(oder)
-                }
-            }
-                break
-            case 0 :
-                break
-        }
-        console.log("======listTable======")
-        console.table(printfTable)
-    } else console.log("===========ko co ban===========")
-}
-
+let option: number
 // ============================================main============================================
 while (repeat) {
     console.log("======star======")
@@ -139,7 +41,7 @@ while (repeat) {
                 } else console.log("===========Password confirmation failed===========")
             } else {
                 console.log("===========Invalid email and account===========")
-                break
+
             }
         }
             break;
@@ -154,7 +56,7 @@ while (repeat) {
                 password = readlineSync.question("password: ")
                 for (i = 0; i < manageAcc.length; i++) {
 
-                    if (account == manageAcc[i].account || password == manageAcc[i].password) {
+                    if (account == manageAcc[i].account && password == manageAcc[i].password) {
 
                         checkLogin = true
 
@@ -193,6 +95,58 @@ while (repeat) {
         }
     }
 }
+
+// ============================================function============================================
+
+
+function workWithTheTable() {
+    numTable = readlineSync.question("table: ")
+    if (numTable <= numberOfTable && numTable > 0) {
+        console.log("======work with the table======")
+        console.log("nhap 1 : TurnOnTheTable\nnhap 2 : TurnOffTheTable\nnhap 3 : oder\nnhap 0 : out")
+        let inp = +readlineSync.question("nhap: ")
+        let table = manageTable.listTable[numTable - 1];
+        switch (inp) {
+            case 1:
+                manageTable.TurnOnTheTable(numTable)
+                break
+            case 2: {
+                manageTable.TurnOffTheTable(numTable)
+                console.log(`
+                            ============totalMoneyTable============`)
+                console.log(`
+            ==================================Bill================================
+            = +table: ${numTable}                                                     
+            =                                                                    
+            = +time : ${table.getTime()} 
+            =                                                                    
+            =                                                                    
+            = +pay = ${manageTable.moneyTable} + ${manageTable.TotalMoneyTable(numTable, 0)} = ${manageTable.moneyTable += manageTable.TotalMoneyTable(numTable, 0)}                                
+            ======================================================================
+            `)
+                console.log("======listTable======");
+                console.table(printfTable);
+                table.entryTime= null
+                table.timeOut= null
+                table.serve= 0
+                manageTable.moneyTable = 0
+                break
+            }
+            case 3: {
+                console.log("nhap 1 : food\nnhap 2 : water\nnhap 3 : poolCue\nnhap 0 : out")
+                let oder: number = +readlineSync.question("nhap: ")
+                if (table.status !== null) {
+                    manageTable.oderServe(oder, option, numTable)
+                }
+            }
+                break
+            case 0 :
+                break
+        }
+
+    } else console.log("===========ko co ban===========")
+}
+
 
 
 

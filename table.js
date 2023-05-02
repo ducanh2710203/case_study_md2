@@ -17,7 +17,6 @@ var Table = /** @class */ (function () {
         this.status = status;
     }
     Table.prototype.totalMoneyTable = function (nu) {
-        // console.log('GET TIME------ ',this.getTime())
         if (this.entryTime && this.timeOut && this.getTime() !== undefined) {
             return (this.timeOut.getMinutes() - this.entryTime.getMinutes()) * 4500 + nu;
         }

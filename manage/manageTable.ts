@@ -1,8 +1,14 @@
 import {Table} from "../table";
+// @ts-ignore
+// import readlineSync from "readline-sync";
+let readlineSync = require('readline-sync')
+let oder: number
 
 export class ManageTable {
     listTable: Table[] = []
     moneyTableInDay: number[] = []
+    moneyTable: number = 0
+    listOder = []
 
     constructor() {
     }
@@ -29,13 +35,19 @@ export class ManageTable {
         if (table.entryTime !== null) {
             table.status = false
             table.timeOut = new Date
+
         } else console.log("===========table is not turned on to turn off===========")
+
     }
 
     TotalMoneyTable(num: number, serve: number) {
+        let table = this.listTable[num - 1];
         let money: number | undefined = this.listTable[num - 1].totalMoneyTable(serve)
-        if (money !== undefined)
+        if (money !== undefined) {
             this.moneyTableInDay.push(money)
+
+        }
+
         return this.listTable[num - 1].totalMoneyTable(serve)
     }
 
@@ -46,4 +58,58 @@ export class ManageTable {
         })
         return sum
     }
+    serviceCharge(option, moneyServe, numTable) {
+        console.log("nhap 1 : goi do\nnhap 2 : tra lai\nnhap 0 : out")
+        option = +readlineSync.question("nhap ")
+        let table = this.listTable[numTable - 1];
+        switch (option) {
+            case 1: {
+                if (table.entryTime !== null) {
+                    table.serve = moneyServe
+                    this.listOder.push(table.serve)
+                    this.moneyTable += table.serve
+                    table.serve = this.moneyTable
+                    break
+                } else {
+                    console.log("table "+numTable+" is not turned on")
+                    break
+                }
+            }
+            case 2: {
+                if (this.listOder.indexOf(moneyServe) !== -1) {
+                    this.listOder.splice(this.listOder.indexOf(moneyServe),1)
+                    table.serve = moneyServe
+                    this.moneyTable -= table.serve
+                    table.serve = this.moneyTable
+                    break
+                } else {
+                    console.log("Your table does not order this item")
+                    break
+                }
+            }
+            case 0 :
+                break
+        }
+    }
+
+    oderServe(oder: number, option: number, numTable) {
+
+
+        switch (oder) {
+            case 1:
+                this.serviceCharge(option, 10, numTable)
+                break
+
+            case 2:
+                this.serviceCharge(option, 11, numTable)
+                break
+            case 3:
+                this.serviceCharge(option, 30, numTable)
+                break
+            case 0:
+                break
+        }
+
+    }
+
 }

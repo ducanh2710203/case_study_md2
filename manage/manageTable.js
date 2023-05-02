@@ -2,10 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ManageTable = void 0;
 var table_1 = require("../table");
+// @ts-ignore
+// import readlineSync from "readline-sync";
+var readlineSync = require('readline-sync');
+var oder;
 var ManageTable = /** @class */ (function () {
     function ManageTable() {
         this.listTable = [];
         this.moneyTableInDay = [];
+        this.moneyTable = 0;
+        this.listOder = [];
     }
     ManageTable.prototype.creatTable = function (num) {
         for (var i = 0; i < num; i++) {
@@ -34,9 +40,11 @@ var ManageTable = /** @class */ (function () {
             console.log("===========table is not turned on to turn off===========");
     };
     ManageTable.prototype.TotalMoneyTable = function (num, serve) {
+        var table = this.listTable[num - 1];
         var money = this.listTable[num - 1].totalMoneyTable(serve);
-        if (money !== undefined)
+        if (money !== undefined) {
             this.moneyTableInDay.push(money);
+        }
         return this.listTable[num - 1].totalMoneyTable(serve);
     };
     ManageTable.prototype.TotalIncome = function () {
@@ -45,6 +53,56 @@ var ManageTable = /** @class */ (function () {
             sum += item;
         });
         return sum;
+    };
+    ManageTable.prototype.serviceCharge = function (option, moneyServe, numTable) {
+        console.log("nhap 1 : goi do\nnhap 2 : tra lai\nnhap 0 : out");
+        option = +readlineSync.question("nhap ");
+        var table = this.listTable[numTable - 1];
+        switch (option) {
+            case 1: {
+                if (table.entryTime !== null) {
+                    table.serve = moneyServe;
+                    this.listOder.push(table.serve);
+                    this.moneyTable += table.serve;
+                    table.serve = this.moneyTable;
+                    break;
+                }
+                else {
+                    console.log("table " + numTable + " is not turned on");
+                    break;
+                }
+            }
+            case 2: {
+                if (this.listOder.indexOf(moneyServe) !== -1) {
+                    this.listOder.splice(this.listOder.indexOf(moneyServe), 1);
+                    table.serve = moneyServe;
+                    this.moneyTable -= table.serve;
+                    table.serve = this.moneyTable;
+                    break;
+                }
+                else {
+                    console.log("Your table does not order this item");
+                    break;
+                }
+            }
+            case 0:
+                break;
+        }
+    };
+    ManageTable.prototype.oderServe = function (oder, option, numTable) {
+        switch (oder) {
+            case 1:
+                this.serviceCharge(option, 10, numTable);
+                break;
+            case 2:
+                this.serviceCharge(option, 11, numTable);
+                break;
+            case 3:
+                this.serviceCharge(option, 30, numTable);
+                break;
+            case 0:
+                break;
+        }
     };
     return ManageTable;
 }());
