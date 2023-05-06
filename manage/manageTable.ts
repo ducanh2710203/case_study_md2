@@ -1,13 +1,14 @@
 import {Table} from "../table";
-// @ts-ignore
-// import readlineSync from "readline-sync";
+import {ItfManageTable} from "../interface/itf-ManageTable";
+
 let readlineSync = require('readline-sync')
 let oder: number
 
-export class ManageTable {
+
+export class ManageTable implements ItfManageTable {
     listTable: Table[] = []
     moneyTableInDay: number[] = []
-    moneyTable: number = 0
+
     listOder = []
 
     constructor() {
@@ -37,11 +38,9 @@ export class ManageTable {
             table.timeOut = new Date
 
         } else console.log("===========table is not turned on to turn off===========")
-
     }
 
     TotalMoneyTable(num: number, serve: number) {
-        let table = this.listTable[num - 1];
         let money: number | undefined = this.listTable[num - 1].totalMoneyTable(serve)
         if (money !== undefined) {
             this.moneyTableInDay.push(money)
@@ -54,10 +53,13 @@ export class ManageTable {
     TotalIncome() {
         let sum: number = 0
         this.moneyTableInDay.forEach((item) => {
+            console.log("sum" + sum)
+            console.log("item" + item)
             sum += item
         })
         return sum
     }
+
     serviceCharge(option, moneyServe, numTable) {
         console.log("nhap 1 : goi do\nnhap 2 : tra lai\nnhap 0 : out")
         option = +readlineSync.question("nhap ")
@@ -67,20 +69,20 @@ export class ManageTable {
                 if (table.entryTime !== null) {
                     table.serve = moneyServe
                     this.listOder.push(table.serve)
-                    this.moneyTable += table.serve
-                    table.serve = this.moneyTable
+                    table.moneyTable += table.serve
+                    table.serve = table.moneyTable
                     break
                 } else {
-                    console.log("table "+numTable+" is not turned on")
+                    console.log("table " + numTable + " is not turned on")
                     break
                 }
             }
             case 2: {
                 if (this.listOder.indexOf(moneyServe) !== -1) {
-                    this.listOder.splice(this.listOder.indexOf(moneyServe),1)
+                    this.listOder.splice(this.listOder.indexOf(moneyServe), 1)
                     table.serve = moneyServe
-                    this.moneyTable -= table.serve
-                    table.serve = this.moneyTable
+                    table.moneyTable -= table.serve
+                    table.serve = table.moneyTable
                     break
                 } else {
                     console.log("Your table does not order this item")

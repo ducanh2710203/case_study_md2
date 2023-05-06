@@ -2,15 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ManageTable = void 0;
 var table_1 = require("../table");
-// @ts-ignore
-// import readlineSync from "readline-sync";
 var readlineSync = require('readline-sync');
 var oder;
 var ManageTable = /** @class */ (function () {
     function ManageTable() {
         this.listTable = [];
         this.moneyTableInDay = [];
-        this.moneyTable = 0;
         this.listOder = [];
     }
     ManageTable.prototype.creatTable = function (num) {
@@ -40,7 +37,6 @@ var ManageTable = /** @class */ (function () {
             console.log("===========table is not turned on to turn off===========");
     };
     ManageTable.prototype.TotalMoneyTable = function (num, serve) {
-        var table = this.listTable[num - 1];
         var money = this.listTable[num - 1].totalMoneyTable(serve);
         if (money !== undefined) {
             this.moneyTableInDay.push(money);
@@ -50,6 +46,8 @@ var ManageTable = /** @class */ (function () {
     ManageTable.prototype.TotalIncome = function () {
         var sum = 0;
         this.moneyTableInDay.forEach(function (item) {
+            console.log("sum" + sum);
+            console.log("item" + item);
             sum += item;
         });
         return sum;
@@ -63,8 +61,8 @@ var ManageTable = /** @class */ (function () {
                 if (table.entryTime !== null) {
                     table.serve = moneyServe;
                     this.listOder.push(table.serve);
-                    this.moneyTable += table.serve;
-                    table.serve = this.moneyTable;
+                    table.moneyTable += table.serve;
+                    table.serve = table.moneyTable;
                     break;
                 }
                 else {
@@ -76,8 +74,8 @@ var ManageTable = /** @class */ (function () {
                 if (this.listOder.indexOf(moneyServe) !== -1) {
                     this.listOder.splice(this.listOder.indexOf(moneyServe), 1);
                     table.serve = moneyServe;
-                    this.moneyTable -= table.serve;
-                    table.serve = this.moneyTable;
+                    table.moneyTable -= table.serve;
+                    table.serve = table.moneyTable;
                     break;
                 }
                 else {

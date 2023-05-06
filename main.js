@@ -4,7 +4,6 @@ var manageTable_1 = require("./manage/manageTable");
 var staff_1 = require("./staff");
 // ==============================variable initialization and declaration==============================
 var readlineSync = require('readline-sync');
-// let table =
 var init;
 var manageTable = new manageTable_1.ManageTable();
 var numberOfTable = 5;
@@ -17,6 +16,9 @@ var checkLogin = false;
 manageAcc.push(admin);
 var repeat = true;
 var option;
+var test0;
+var test1;
+var checkRegistration = false;
 // ============================================main============================================
 while (repeat) {
     console.log("======star======");
@@ -25,37 +27,52 @@ while (repeat) {
     switch (init) {
         case 2:
             {
-                var name_1 = readlineSync.question("nhap name: ");
-                var email = readlineSync.question("nhap email: ");
-                var testEmail = /^[a-z]{1,6}@/;
-                var password = readlineSync.question("nhap pass: ");
-                var testPass = /^[0-9]{1,6}/;
-                var confirmPassword = readlineSync.question("Confirm password: ");
-                var test0 = testEmail.test(email);
-                var test1 = testPass.test(password);
-                if (test0 && test1) {
-                    if (password == confirmPassword) {
-                        var used = new staff_1.Staff(name_1, email, password);
-                        manageAcc.push(used);
-                        console.table(manageAcc);
-                        console.log("===========Sign Up Success===========");
+                do {
+                    var name_1 = readlineSync.question("nhap name: ");
+                    var email = readlineSync.question("account: ");
+                    var kiemtra = true;
+                    do {
+                        email = readlineSync.question("account: ");
+                        for (var j = 0; j < manageAcc.length; j++) {
+                            if (manageAcc[j]._account == email) {
+                                kiemtra = false;
+                                break;
+                            }
+                            else
+                                kiemtra = true;
+                        }
+                    } while (!kiemtra);
+                    var testEmail = /^[a-z]{1,6}@/;
+                    var password = readlineSync.question("password: ", { hideEchoBack: true });
+                    var testPass = /^[0-9]{1,6}/;
+                    var confirmPassword = readlineSync.question("Confirm password: ", { hideEchoBack: true });
+                    test0 = testEmail.test(email);
+                    test1 = testPass.test(password);
+                    if (test0 && test1) {
+                        if (password == confirmPassword) {
+                            var used = new staff_1.Staff(name_1, email, password);
+                            manageAcc.push(used);
+                            console.log("===========Sign Up Success===========");
+                            console.log('Duc Anh yeu Giang <3');
+                        }
+                        else {
+                            console.log("===========Password confirmation failed===========");
+                        }
+                        checkRegistration = true;
                     }
-                    else
-                        console.log("===========Password confirmation failed===========");
-                }
-                else {
-                    console.log("===========Invalid email and account===========");
-                }
+                    else {
+                        console.log("===========Invalid email and account===========");
+                    }
+                } while (!checkRegistration);
             }
             break;
         case 1: {
             console.log("===========login===========");
-            console.table(manageAcc);
             var account = void 0;
             var password = void 0;
             do {
                 account = readlineSync.question("account: ");
-                password = readlineSync.question("password: ");
+                password = readlineSync.question("password: ", { hideEchoBack: true });
                 for (i = 0; i < manageAcc.length; i++) {
                     if (account == manageAcc[i].account && password == manageAcc[i].password) {
                         checkLogin = true;
@@ -110,13 +127,13 @@ function workWithTheTable() {
             case 2: {
                 manageTable.TurnOffTheTable(numTable);
                 console.log("\n                            ============totalMoneyTable============");
-                console.log("\n            ==================================Bill================================\n            = +table: ".concat(numTable, "                                                     \n            =                                                                    \n            = +time : ").concat(table.getTime(), " \n            =                                                                    \n            =                                                                    \n            = +pay = ").concat(manageTable.moneyTable, " + ").concat(manageTable.TotalMoneyTable(numTable, 0), " = ").concat(manageTable.moneyTable += manageTable.TotalMoneyTable(numTable, 0), "                                \n            ======================================================================\n            "));
+                console.log("\n            ==================================Bill================================\n            = +table: ".concat(numTable, "                                                     \n            =                                                                    \n            = +time : ").concat(table.getTime(), " \n            =                                                                    \n            =                                                                    \n            = +pay = ").concat(table.moneyTable, " + ").concat(manageTable.TotalMoneyTable(numTable, 0), " = ").concat(table.moneyTable += manageTable.TotalMoneyTable(numTable, 0), "                                \n            ======================================================================\n            "));
                 console.log("======listTable======");
                 console.table(printfTable);
                 table.entryTime = null;
                 table.timeOut = null;
                 table.serve = 0;
-                manageTable.moneyTable = 0;
+                table.moneyTable = 0;
                 break;
             }
             case 3:

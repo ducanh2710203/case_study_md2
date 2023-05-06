@@ -14,6 +14,7 @@ var Table = /** @class */ (function () {
         this.serve = Serve.none;
         this.entryTime = null;
         this.timeOut = null;
+        this.moneyTable = 0;
         this.status = status;
     }
     Table.prototype.totalMoneyTable = function (nu) {

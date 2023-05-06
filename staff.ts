@@ -1,4 +1,6 @@
-export class Staff {
+import {ItfStaff} from "./itf-Staff";
+
+export class Staff implements ItfStaff{
     private _name: string
     private _account: string
     private _password: string

@@ -1,9 +1,7 @@
 import {ManageTable} from "./manage/manageTable";
 import {Staff} from "./staff";
-import {Table} from "./table";
 // ==============================variable initialization and declaration==============================
 let readlineSync = require('readline-sync')
-// let table =
 let init: number
 let manageTable = new ManageTable()
 let numberOfTable = 5
@@ -16,50 +14,62 @@ let checkLogin = false
 manageAcc.push(admin)
 let repeat = true
 let option: number
+let test0: boolean
+let test1: boolean
+let checkRegistration: boolean = false
 // ============================================main============================================
 while (repeat) {
+
     console.log("======star======")
     console.log("nhap 1 : log in\nnhap 2 : sign up")
     init = +readlineSync.question("nhap: ")
     switch (init) {
         case 2: {
-            let name = readlineSync.question("nhap name: ")
-            let email = readlineSync.question("nhap email: ")
-            let testEmail = /^[a-z]{1,6}@/
-            let password = readlineSync.question("nhap pass: ")
-            let testPass = /^[0-9]{1,6}/
-            let confirmPassword = readlineSync.question("Confirm password: ")
-            let test0 = testEmail.test(email);
-            let test1 = testPass.test(password);
-            if (test0 && test1) {
-                if (password == confirmPassword) {
-                    let used = new Staff(name, email, password)
-
-                    manageAcc.push(used)
-                    console.table(manageAcc)
-                    console.log("===========Sign Up Success===========")
-                } else console.log("===========Password confirmation failed===========")
-            } else {
-                console.log("===========Invalid email and account===========")
-
-            }
+            do {
+                let name = readlineSync.question("nhap name: ")
+                let email = readlineSync.question("account: ")
+                let check = true
+                do {
+                    email = readlineSync.question("account: ")
+                    for (let j = 0; j < manageAcc.length; j++) {
+                        if (manageAcc[j]._account == email) {
+                            check = false
+                            break
+                        } else check = true
+                    }
+                } while (!check)
+                let testEmail = /^[a-z]{1,6}@/
+                let password = readlineSync.question("password: ", {hideEchoBack: true})
+                let testPass = /^[0-9]{1,6}/
+                let confirmPassword = readlineSync.question("Confirm password: ", {hideEchoBack: true})
+                test0 = testEmail.test(email);
+                test1 = testPass.test(password);
+                if (test0 && test1) {
+                    if (password == confirmPassword) {
+                        let used = new Staff(name, email, password)
+                        manageAcc.push(used)
+                        console.log("===========Sign Up Success===========")
+                        console.log('Duc Anh yeu Giang <3')
+                    } else {
+                        console.log("===========Password confirmation failed===========")
+                    }
+                    checkRegistration = true
+                } else {
+                    console.log("===========Invalid email and account===========")
+                }
+            } while (!checkRegistration)
         }
-            break;
+            break
         case 1: {
             console.log("===========login===========")
-            console.table(manageAcc)
             let account: string
             let password: string
-
             do {
                 account = readlineSync.question("account: ")
-                password = readlineSync.question("password: ")
+                password = readlineSync.question("password: ", {hideEchoBack: true})
                 for (i = 0; i < manageAcc.length; i++) {
-
                     if (account == manageAcc[i].account && password == manageAcc[i].password) {
-
                         checkLogin = true
-
                     }
                 }
                 if (!checkLogin) {
@@ -97,8 +107,6 @@ while (repeat) {
 }
 
 // ============================================function============================================
-
-
 function workWithTheTable() {
     numTable = readlineSync.question("table: ")
     if (numTable <= numberOfTable && numTable > 0) {
@@ -121,15 +129,15 @@ function workWithTheTable() {
             = +time : ${table.getTime()} 
             =                                                                    
             =                                                                    
-            = +pay = ${manageTable.moneyTable} + ${manageTable.TotalMoneyTable(numTable, 0)} = ${manageTable.moneyTable += manageTable.TotalMoneyTable(numTable, 0)}                                
+            = +pay = ${table.moneyTable} + ${manageTable.TotalMoneyTable(numTable, 0)} = ${table.moneyTable += manageTable.TotalMoneyTable(numTable, 0)}                                
             ======================================================================
             `)
                 console.log("======listTable======");
                 console.table(printfTable);
-                table.entryTime= null
-                table.timeOut= null
-                table.serve= 0
-                manageTable.moneyTable = 0
+                table.entryTime = null
+                table.timeOut = null
+                table.serve = 0
+                table.moneyTable = 0
                 break
             }
             case 3: {
@@ -143,7 +151,6 @@ function workWithTheTable() {
             case 0 :
                 break
         }
-
     } else console.log("===========ko co ban===========")
 }
 
