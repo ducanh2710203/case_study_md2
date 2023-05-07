@@ -27,7 +27,8 @@ while (repeat) {
         case 2: {
             do {
                 let name = readlineSync.question("nhap name: ")
-                let email = readlineSync.question("account: ")
+                let email
+                // let email = readlineSync.question("account: ")
                 let check = true
                 do {
                     email = readlineSync.question("account: ")
@@ -49,7 +50,6 @@ while (repeat) {
                         let used = new Staff(name, email, password)
                         manageAcc.push(used)
                         console.log("===========Sign Up Success===========")
-                        console.log('Duc Anh yeu Giang <3')
                     } else {
                         console.log("===========Password confirmation failed===========")
                     }

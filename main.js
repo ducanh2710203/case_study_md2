@@ -29,19 +29,22 @@ while (repeat) {
             {
                 do {
                     var name_1 = readlineSync.question("nhap name: ");
-                    var email = readlineSync.question("account: ");
-                    var kiemtra = true;
+                    var email 
+                    // let email = readlineSync.question("account: ")
+                    = void 0;
+                    // let email = readlineSync.question("account: ")
+                    var check = true;
                     do {
                         email = readlineSync.question("account: ");
                         for (var j = 0; j < manageAcc.length; j++) {
                             if (manageAcc[j]._account == email) {
-                                kiemtra = false;
+                                check = false;
                                 break;
                             }
                             else
-                                kiemtra = true;
+                                check = true;
                         }
-                    } while (!kiemtra);
+                    } while (!check);
                     var testEmail = /^[a-z]{1,6}@/;
                     var password = readlineSync.question("password: ", { hideEchoBack: true });
                     var testPass = /^[0-9]{1,6}/;
@@ -53,7 +56,6 @@ while (repeat) {
                             var used = new staff_1.Staff(name_1, email, password);
                             manageAcc.push(used);
                             console.log("===========Sign Up Success===========");
-                            console.log('Duc Anh yeu Giang <3');
                         }
                         else {
                             console.log("===========Password confirmation failed===========");
