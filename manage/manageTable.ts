@@ -53,8 +53,7 @@ export class ManageTable implements ItfManageTable {
     TotalIncome() {
         let sum: number = 0
         this.moneyTableInDay.forEach((item) => {
-            console.log("sum" + sum)
-            console.log("item" + item)
+
             sum += item
         })
         return sum
